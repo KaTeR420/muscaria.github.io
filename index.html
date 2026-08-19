@@ -1,1 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muscaria — psychedelic folk from the forest floor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
 
+  :root{
+    --void:#0d130f;
+    --panel:#141d17;
+    --panel-2:#0f1712;
+    --moss:#3c5240;
+    --moss-line: rgba(120,150,125,0.18);
+    --cream:#f1ead6;
+    --cream-dim: rgba(241,234,214,0.62);
+    --red:#c1372a;
+    --red-deep:#7e2115;
+    --gold:#c89b3c;
+    --white-dot:#f5efe0;
+
+    --display: 'Fraunces', serif;
+    --body: 'Space Grotesk', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--void);
+    color:var(--cream);
+    font-family:var(--body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--red); color:var(--white-dot); }
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  :focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- spore field texture ---------- */
+  .spore-field{
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(2px 2px at 8% 22%, var(--white-dot) 0, transparent 60%),
+      radial-gradient(3px 3px at 18% 68%, var(--red) 0, transparent 60%),
+      radial-gradient(2px 2px at 27% 12%, var(--gold) 0, transparent 60%),
+      radial-gradient(2px 2px at 39% 78%, var(--white-dot) 0, transparent 60%),
+      radial-gradient(3px 3px at 52% 30%, var(--white-dot) 0, transparent 60%),
+      radial-gradient(2px 2px at 63% 58%, var(--red) 0, transparent 60%),
+      radial-gradient(2px 2px at 71% 15%, var(--gold) 0, transparent 60%),
+      radial-gradient(3px 3px at 82% 66%, var(--white-dot) 0, transparent 60%),
+      radial-gradient(2px 2px at 91% 34%, var(--white-dot) 0, transparent 60%),
+      radial-gradient(2px 2px at 96% 82%, var(--red) 0, transparent 60%);
+    opacity:.55;
+    pointer-events:none;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(13,19,15,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--moss-line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand svg{ width:30px; height:30px; }
+  .brand-name{
+    font-family:var(--display); font-weight:600; font-size:1.35rem;
+    letter-spacing:.03em;
+  }
+  .nav-links{ display:flex; gap:2px; align-items:center; }
+  .nav-links a{
+    font-family:var(--mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:10px 16px; position:relative; color:var(--cream-dim);
+    transition:color .2s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--cream); }
+  .nav-links a.active::after{
+    content:"";
+    position:absolute; left:50%; bottom:2px; width:4px; height:4px; border-radius:50%;
+    background:var(--red); transform:translateX(-50%);
+  }
+  .nav-toggle{ display:none; background:none; border:none; color:var(--cream); font-size:1.6rem; cursor:pointer; }
+
+  @media (max-width: 820px){
+    .nav-links{
+      position:fixed; top:76px; left:0; right:0;
+      background:var(--panel);
+      flex-direction:column; align-items:flex-start;
+      padding:12px 32px 24px;
+      border-bottom:1px solid var(--moss-line);
+      transform:translateY(-8px);
+      opacity:0; visibility:hidden;
+      transition:opacity .25s ease, transform .25s ease, visibility .25s;
+    }
+    .nav-links.open{ opacity:1; visibility:visible; transform:translateY(0); }
+    .nav-links a{ padding:12px 0; width:100%; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:76px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(60,82,64,0.35), transparent 60%),
+      linear-gradient(180deg, var(--void), var(--panel-2));
+    overflow:hidden;
+  }
+  .hero-inner{ position:relative; z-index:2; text-align:center; }
+  .eyebrow{
+    font-family:var(--mono); font-size:.8rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:22px; display:inline-flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before, .eyebrow::after{ content:""; width:22px; height:1px; background:var(--gold); opacity:.6; }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(3.8rem, 13vw, 9.5rem);
+    line-height:.92;
+    letter-spacing:-.01em;
+    color:var(--cream);
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:400; color:var(--red);
+  }
+  .hero p.tagline{
+    font-family:var(--display); font-style:italic; font-weight:400;
+    font-size:clamp(1.1rem, 2.4vw, 1.5rem);
+    color:var(--cream-dim);
+    margin:26px auto 0;
+    max-width:38ch;
+  }
+  .hero-cta{
+    margin-top:44px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono); font-size:.82rem; letter-spacing:.1em; text-transform:uppercase;
+    padding:15px 30px; border-radius:2px; cursor:pointer; border:1px solid transparent;
+    transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    display:inline-block;
+  }
+  .btn-solid{ background:var(--red); color:var(--white-dot); }
+  .btn-solid:hover{ background:var(--red-deep); transform:translateY(-2px); }
+  .btn-outline{ border-color:var(--moss); color:var(--cream); }
+  .btn-outline:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+
+  .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.18em; color:var(--cream-dim);
+    z-index:2;
+  }
+  .scroll-cue .stem{
+    width:1px; height:36px; background:linear-gradient(var(--gold), transparent);
+    animation:drip 2.2s ease-in-out infinite;
+  }
+  @keyframes drip{ 0%{opacity:.2; transform:scaleY(.4); transform-origin:top;} 50%{opacity:1; transform:scaleY(1); transform-origin:top;} 100%{opacity:.2; transform:scaleY(.4); transform-origin:top;} }
+
+  /* ---------- section shared ---------- */
+  section{ position:relative; padding:120px 0; }
+  .section-head{ margin-bottom:64px; max-width:640px; }
+  .section-head .eyebrow{ margin-bottom:16px; }
+  .section-head h2{
+    font-family:var(--display); font-weight:600; font-size:clamp(2.1rem, 4.5vw, 3.2rem);
+  }
+  .section-head p{ color:var(--cream-dim); margin-top:16px; font-size:1.05rem; max-width:52ch; }
+
+  .divider{
+    display:flex; align-items:center; gap:10px; justify-content:center; margin:0 auto;
+  }
+  .divider span{ width:5px; height:5px; border-radius:50%; background:var(--moss); }
+  .divider span:nth-child(2){ background:var(--red); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- about ---------- */
+  .about{ background:var(--panel-2); border-top:1px solid var(--moss-line); border-bottom:1px solid var(--moss-line); }
+  .about-grid{
+    display:grid; grid-template-columns: 1.1fr .9fr; gap:64px; align-items:start;
+  }
+  .about-grid p{ color:var(--cream-dim); margin-bottom:18px; font-size:1.02rem; }
+  .about-grid p:first-of-type{ color:var(--cream); font-size:1.18rem; font-family:var(--display); font-weight:500; }
+  .stat-list{ display:grid; gap:22px; }
+  .stat{
+    border-left:2px solid var(--red);
+    padding:6px 0 6px 20px;
+  }
+  .stat b{ display:block; font-family:var(--display); font-size:1.6rem; color:var(--gold); }
+  .stat span{ font-family:var(--mono); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-dim); }
+
+  @media (max-width: 860px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+
+  /* ---------- music ---------- */
+  .track-list{ display:grid; gap:1px; background:var(--moss-line); border:1px solid var(--moss-line); }
+  .track{
+    background:var(--void); display:grid; grid-template-columns:56px 1fr auto auto; gap:20px;
+    align-items:center; padding:22px 24px; transition:background .2s ease;
+  }
+  .track:hover{ background:var(--panel); }
+  .track .num{ font-family:var(--mono); color:var(--moss); font-size:.9rem; }
+  .track .play{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--moss);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:border-color .2s ease, background .2s ease;
+    background:transparent;
+  }
+  .track .play:hover{ border-color:var(--red); background:var(--red); }
+  .track .play svg{ width:12px; height:12px; fill:var(--cream); margin-left:2px; }
+  .track-title{ font-family:var(--display); font-size:1.15rem; }
+  .track-sub{ font-family:var(--mono); font-size:.72rem; color:var(--cream-dim); letter-spacing:.05em; margin-top:4px; }
+  .track .len{ font-family:var(--mono); color:var(--cream-dim); font-size:.82rem; }
+
+  @media (max-width:640px){
+    .track{ grid-template-columns:40px 1fr auto; }
+    .track .len{ display:none; }
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery{ background:var(--panel-2); border-top:1px solid var(--moss-line); border-bottom:1px solid var(--moss-line); }
+  .member-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:2px; background:var(--moss-line); border:1px solid var(--moss-line);
+  }
+  .member{
+    background:var(--void); position:relative; overflow:hidden;
+  }
+  .member-photo{
+    aspect-ratio: 3/4; position:relative; display:flex; align-items:center; justify-content:center;
+    background: var(--photo-bg, radial-gradient(circle at 30% 20%, #2c3c2f, #0d130f));
+    overflow:hidden;
+  }
+  .member-photo .spore-field{ opacity:.4; }
+  .member-photo .initial{
+    font-family:var(--display); font-weight:600; font-size:4.2rem; color:rgba(241,234,214,0.14);
+    position:relative; z-index:1;
+  }
+  .member-photo .cap{
+    position:absolute; bottom:-22%; left:50%; transform:translateX(-50%);
+    width:78%; opacity:.9;
+  }
+  .member-info{ padding:20px 22px 26px; }
+  .member-info .role{ font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--red); }
+  .member-info h3{ font-family:var(--display); font-size:1.35rem; margin:8px 0 10px; }
+  .member-info p{ font-size:.88rem; color:var(--cream-dim); }
+
+  @media (max-width:900px){ .member-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:520px){ .member-grid{ grid-template-columns:1fr; } }
+
+  .gallery-note{
+    margin-top:28px; font-family:var(--mono); font-size:.76rem; color:var(--cream-dim); letter-spacing:.03em;
+  }
+
+  /* ---------- lyrics ---------- */
+  .lyrics-layout{
+    display:grid; grid-template-columns:280px 1fr; gap:0; border:1px solid var(--moss-line);
+  }
+  .song-nav{ border-right:1px solid var(--moss-line); }
+  .song-btn{
+    width:100%; text-align:left; padding:20px 24px; background:none; border:none;
+    border-bottom:1px solid var(--moss-line); cursor:pointer; color:var(--cream-dim);
+    font-family:var(--body); position:relative;
+  }
+  .song-btn:last-child{ border-bottom:none; }
+  .song-btn .t{ font-family:var(--display); font-size:1.05rem; color:var(--cream); display:block; }
+  .song-btn .s{ font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; }
+  .song-btn:hover{ background:var(--panel); }
+  .song-btn.active{ background:var(--panel); color:var(--cream); }
+  .song-btn.active::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--red);
+  }
+
+  .lyric-panel{ padding:52px 56px; min-height:460px; background:var(--panel-2); }
+  .lyric-panel .eyebrow{ margin-bottom:10px; }
+  .lyric-panel h3{ font-family:var(--display); font-size:2.1rem; margin-bottom:6px; }
+  .lyric-panel .credit{ font-family:var(--mono); font-size:.75rem; color:var(--cream-dim); margin-bottom:34px; display:block; }
+  .lyric-body{ white-space:pre-line; font-family:var(--display); font-size:1.12rem; line-height:1.9; color:var(--cream-dim); font-style:italic; max-width:52ch; }
+  .lyric-body strong{ color:var(--gold); font-style:normal; font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; display:block; margin:22px 0 6px; font-weight:700;}
+  .lyric-body strong:first-child{ margin-top:0; }
+
+  @media (max-width:800px){
+    .lyrics-layout{ grid-template-columns:1fr; }
+    .song-nav{ border-right:none; border-bottom:1px solid var(--moss-line); display:flex; overflow-x:auto; }
+    .song-btn{ border-bottom:none; border-right:1px solid var(--moss-line); white-space:nowrap; }
+    .lyric-panel{ padding:40px 26px; }
+  }
+
+  /* ---------- contact / footer ---------- */
+  footer{ padding:100px 0 40px; background:var(--void); border-top:1px solid var(--moss-line); }
+  .footer-grid{
+    display:grid; grid-template-columns:1.3fr .7fr .7fr; gap:48px; padding-bottom:64px;
+  }
+  .footer-grid h2{ font-family:var(--display); font-size:2.4rem; margin-bottom:18px; }
+  .footer-grid p{ color:var(--cream-dim); max-width:38ch; }
+  .footer-col h4{ font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+  .footer-col a{ display:block; color:var(--cream-dim); padding:6px 0; transition:color .2s; }
+  .footer-col a:hover{ color:var(--cream); }
+  .signup{ display:flex; margin-top:20px; border:1px solid var(--moss); max-width:380px; }
+  .signup input{
+    flex:1; background:none; border:none; padding:14px 16px; color:var(--cream); font-family:var(--mono); font-size:.82rem;
+  }
+  .signup input:focus{ outline:none; }
+  .signup button{
+    background:var(--red); border:none; color:var(--white-dot); padding:0 20px; cursor:pointer;
+    font-family:var(--mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.08em;
+  }
+  .signup button:hover{ background:var(--red-deep); }
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    padding-top:28px; border-top:1px solid var(--moss-line);
+    font-family:var(--mono); font-size:.72rem; color:var(--cream-dim); letter-spacing:.04em;
+  }
+
+  @media (max-width:800px){ .footer-grid{ grid-template-columns:1fr; } }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#home" class="brand">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 20C4 11 11 5 20 5C29 5 36 11 36 20C24 15 14 15 4 20Z" fill="#C1372A"/>
+        <circle cx="12" cy="16" r="1.6" fill="#F5EFE0"/>
+        <circle cx="22" cy="12" r="1.3" fill="#F5EFE0"/>
+        <circle cx="29" cy="17" r="1.1" fill="#F5EFE0"/>
+        <circle cx="17" cy="18.5" r="1" fill="#F5EFE0"/>
+        <rect x="17" y="20" width="6" height="14" rx="2.4" fill="#E9E1CC"/>
+      </svg>
+      <span class="brand-name">MUSCARIA</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#lyrics">Lyrics</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="spore-field"></div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">Psychedelic folk trio &mdash; est. 2019</span>
+      <h1>MUS<em>CAR</em>IA</h1>
+      <p class="tagline">Songs that grow slow in the dark, then all at once.</p>
+      <div class="hero-cta">
+        <a href="#music" class="btn btn-solid">Listen to the album</a>
+        <a href="#gallery" class="btn btn-outline">Meet the band</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>SCROLL</span><span class="stem"></span></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-grid reveal">
+        <div>
+          <p>Muscaria formed in a damp rehearsal room under a record shop, built around the idea that a song could behave like a mushroom &mdash; mostly hidden, patient underground, then breaking the surface all at once.</p>
+          <p>The band draws on folk fingerpicking, doom-adjacent low end, and analog synth textures that sit somewhere between a hymn and a warning. Three albums in, they still record live, in one room, mistakes included.</p>
+          <p>Based out of a coastal town with more rain than sun, which, they'll tell you, is exactly the point.</p>
+        </div>
+        <div class="stat-list">
+          <div class="stat"><b>2019</b><span>Formed</span></div>
+          <div class="stat"><b>3</b><span>Albums released</span></div>
+          <div class="stat"><b>140+</b><span>Shows played</span></div>
+          <div class="stat"><b>1</b><span>Room they always record in</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="music">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Discography</span>
+        <h2>Ring of White Caps</h2>
+        <p>The latest record, out now. Six tracks recorded live to tape over three foggy nights.</p>
+      </div>
+      <div class="track-list reveal">
+        <div class="track">
+          <span class="num">01</span>
+          <div>
+            <div class="track-title">Fly Agaric</div>
+            <div class="track-sub">Ring of White Caps · Opener</div>
+          </div>
+          <button class="play" aria-label="Play Fly Agaric"><svg viewBox="0 0 12 14"><path d="M0 0L12 7L0 14Z"/></svg></button>
+          <span class="len">4:12</span>
+        </div>
+        <div class="track">
+          <span class="num">02</span>
+          <div>
+            <div class="track-title">Spore Song</div>
+            <div class="track-sub">Ring of White Caps</div>
+          </div>
+          <button class="play" aria-label="Play Spore Song"><svg viewBox="0 0 12 14"><path d="M0 0L12 7L0 14Z"/></svg></button>
+          <span class="len">3:47</span>
+        </div>
+        <div class="track">
+          <span class="num">03</span>
+          <div>
+            <div class="track-title">Underbark</div>
+            <div class="track-sub">Ring of White Caps</div>
+          </div>
+          <button class="play" aria-label="Play Underbark"><svg viewBox="0 0 12 14"><path d="M0 0L12 7L0 14Z"/></svg></button>
+          <span class="len">5:03</span>
+        </div>
+        <div class="track">
+          <span class="num">04</span>
+          <div>
+            <div class="track-title">Ring of White Caps</div>
+            <div class="track-sub">Ring of White Caps · Title track</div>
+          </div>
+          <button class="play" aria-label="Play Ring of White Caps"><svg viewBox="0 0 12 14"><path d="M0 0L12 7L0 14Z"/></svg></button>
+          <span class="len">6:29</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">The mycelium</span>
+        <h2>Behind the band</h2>
+        <p>The four people who make the room sound the way it does. Swap the photo placeholders below for your own band photography.</p>
+      </div>
+
+      <div class="member-grid reveal">
+
+        <div class="member">
+          <div class="member-photo" style="--photo-bg: radial-gradient(circle at 30% 15%, #4a2320, #0d130f);">
+            <div class="spore-field"></div>
+            <span class="initial">WS</span>
+            <!-- Replace with: <img src="wren.jpg" alt="Wren Sorrel"> -->
+          </div>
+          <div class="member-info">
+            <span class="role">Vocals · Guitar</span>
+            <h3>Wren Sorrel</h3>
+            <p>Writes most of the songs on a porch, then argues everyone else out of finishing them differently.</p>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-photo" style="--photo-bg: radial-gradient(circle at 70% 20%, #2f3f2c, #0d130f);">
+            <div class="spore-field"></div>
+            <span class="initial">TV</span>
+          </div>
+          <div class="member-info">
+            <span class="role">Bass</span>
+            <h3>Tamsin Voss</h3>
+            <p>The low end. Formerly in two metal bands and a wedding band, sometimes on the same weekend.</p>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-photo" style="--photo-bg: radial-gradient(circle at 40% 70%, #3c2f4a, #0d130f);">
+            <div class="spore-field"></div>
+            <span class="initial">KB</span>
+          </div>
+          <div class="member-info">
+            <span class="role">Drums</span>
+            <h3>Kai Bramwell</h3>
+            <p>Plays like the song owes him money. Builds the touring drum cases by hand between tours.</p>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-photo" style="--photo-bg: radial-gradient(circle at 60% 40%, #4a3c20, #0d130f);">
+            <div class="spore-field"></div>
+            <span class="initial">OF</span>
+          </div>
+          <div class="member-info">
+            <span class="role">Synth · Theremin</span>
+            <h3>Odile Farr</h3>
+            <p>Joined for one session in 2020 and never quite left. Responsible for most of the fog on stage, literally.</p>
+          </div>
+        </div>
+
+      </div>
+      <p class="gallery-note">Photography by the band. Full press kit available on request.</p>
+    </div>
+  </section>
+
+  <!-- LYRICS -->
+  <section id="lyrics">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Words</span>
+        <h2>Lyrics</h2>
+        <p>Select a song to read along. All lyrics &copy; Muscaria.</p>
+      </div>
+
+      <div class="lyrics-layout reveal">
+        <div class="song-nav" id="songNav" role="tablist" aria-label="Song list">
+          <button class="song-btn active" data-song="fly-agaric" role="tab" aria-selected="true">
+            <span class="t">Fly Agaric</span>
+            <span class="s">Track 01</span>
+          </button>
+          <button class="song-btn" data-song="spore-song" role="tab" aria-selected="false">
+            <span class="t">Spore Song</span>
+            <span class="s">Track 02</span>
+          </button>
+          <button class="song-btn" data-song="underbark" role="tab" aria-selected="false">
+            <span class="t">Underbark</span>
+            <span class="s">Track 03</span>
+          </button>
+          <button class="song-btn" data-song="ring-of-white-caps" role="tab" aria-selected="false">
+            <span class="t">Ring of White Caps</span>
+            <span class="s">Track 04</span>
+          </button>
+        </div>
+
+        <div class="lyric-panel" id="lyricPanel">
+          <span class="eyebrow">Track 01</span>
+          <h3 id="lyricTitle">Fly Agaric</h3>
+          <span class="credit" id="lyricCredit">Written by W. Sorrel &middot; 4:12</span>
+          <div class="lyric-body" id="lyricBody"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Come find us in the dark</h2>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Come to a show.</h2>
+        <p>New tour dates a few times a year, announced first to the list below. No spam, just dates and the occasional song.</p>
+        <form class="signup" onsubmit="event.preventDefault(); this.querySelector('input').value='Thanks — you\'re on the list.'; this.querySelector('input').disabled=true;">
+          <input type="email" required placeholder="your@email.com" aria-label="Email address">
+          <button type="submit">Join</button>
+        </form>
+      </div>
+      <div class="footer-col">
+        <h4>Band</h4>
+        <a href="#about">About</a>
+        <a href="#music">Music</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#lyrics">Lyrics</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Bandcamp</a>
+        <a href="#">YouTube</a>
+        <a href="#">Booking</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year"></span> Muscaria. All rights reserved.</span>
+      <div class="divider"><span></span><span></span><span></span></div>
+      <span>Made in a damp rehearsal room.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+
+  // active nav link on scroll
+  const sections = document.querySelectorAll('main section[id]');
+  const navA = document.querySelectorAll('.nav-links a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navA.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+
+  // reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // lyrics data
+  const songs = {
+    "fly-agaric": {
+      title: "Fly Agaric",
+      credit: "Written by W. Sorrel · 4:12",
+      track: "Track 01",
+      body: "VERSE 1\nRed cap keeping its own kind of time,\nwhite flecks like frost that never melts.\nI found you where the pines grow blind,\nfar past the fence, past what the map felt.\n\nCHORUS\nDon't touch, don't touch, but stand and stare,\nsomething this bright was built to warn.\nI'll keep my distance, keep the air\nbetween us like a thing that's sworn.\n\nVERSE 2\nYou grew up through the fallen year,\nfed on what the forest let go.\nI've been feeding on my own fear,\nlong enough that it starts to show.\n\nCHORUS\nDon't touch, don't touch, but stand and stare,\nsomething this bright was built to warn.\nI'll keep my distance, keep the air\nbetween us like a thing that's sworn."
+    },
+    "spore-song": {
+      title: "Spore Song",
+      credit: "Written by W. Sorrel & O. Farr · 3:47",
+      track: "Track 02",
+      body: "VERSE 1\nEvery word I never said\nis floating somewhere overhead,\nlanding soft on someone new,\ngrowing into something true.\n\nCHORUS\nCarry me on the wind a while,\nI don't need to know where I land.\nCarry me past the last turnstile,\nout of reach of my own hand.\n\nVERSE 2\nYou can't see us take,\nyou can't see us root,\nby the time you're awake\nwe're already fruit."
+    },
+    "underbark": {
+      title: "Underbark",
+      credit: "Written by K. Bramwell · 5:03",
+      track: "Track 03",
+      body: "VERSE 1\nThere's a whole other town\nunderneath this one,\nrunning wire through the roots\nwhere the light can't come.\n\nCHORUS\nWe talk in sugar, we talk in rot,\nwe say the things the surface can't.\nEverything you thought forgot\nis alive down here, and it still can.\n\nVERSE 2\nKnock twice on the oldest tree,\nsomething underneath will knock back.\nIt isn't waiting on you or me,\nit's just been waiting, that's a fact."
+    },
+    "ring-of-white-caps": {
+      title: "Ring of White Caps",
+      credit: "Written by Muscaria · 6:29",
+      track: "Track 04",
+      body: "VERSE 1\nWe grew a circle in the grass,\nno one plants those, they just appear.\nStand inside it if you dare,\nsee how long the quiet lasts.\n\nCHORUS\nRing of white caps, hold your ground,\nkeep the rest of them outside.\nWhatever's lost will still be found\nas long as we don't step aside.\n\nVERSE 2\nBy morning we'll have moved a foot,\nno faster than a held breath goes.\nThat's how slow we take our root,\nthat's how quiet the whole thing grows.\n\nCHORUS\nRing of white caps, hold your ground,\nkeep the rest of them outside.\nWhatever's lost will still be found\nas long as we don't step aside."
+    }
+  };
+
+  const songButtons = document.querySelectorAll('.song-btn');
+  const lyricEyebrow = document.querySelector('#lyricPanel .eyebrow');
+  const lyricTitle = document.getElementById('lyricTitle');
+  const lyricCredit = document.getElementById('lyricCredit');
+  const lyricBody = document.getElementById('lyricBody');
+
+  function renderSong(key){
+    const song = songs[key];
+    if(!song) return;
+    lyricEyebrow.textContent = song.track;
+    lyricTitle.textContent = song.title;
+    lyricCredit.textContent = song.credit;
+    lyricBody.innerHTML = song.body
+      .split('\n\n')
+      .map(stanza => {
+        const lines = stanza.split('\n');
+        const label = lines[0];
+        const rest = lines.slice(1).join('\n');
+        return '<strong>' + label + '</strong>' + rest;
+      })
+      .join('\n\n');
+  }
+
+  songButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      songButtons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      renderSong(btn.dataset.song);
+    });
+  });
+
+  renderSong('fly-agaric');
+</script>
+
+</body>
+</html>
