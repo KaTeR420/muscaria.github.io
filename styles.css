@@ -11,9 +11,9 @@
   --gold:#b2772a;
   --white-dot:#e0e0e0;
 
-  --display: 'Fraunces', serif;
-  --body: 'Space Grotesk', sans-serif;
-  --mono: 'Space Mono', monospace;
+  --display: 'Limelight', serif;
+  --body: 'Limelight', sans-serif;
+  --mono: 'Limelight', monospace;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
