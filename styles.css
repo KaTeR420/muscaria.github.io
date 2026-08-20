@@ -1,15 +1,15 @@
 :root{
   --void:#520a82;
-  --panel:#141d17;
-  --panel-2:#0f1712;
-  --moss:#3c5240;
+  --panel:#520a82;
+  --panel-2:#520a82;
+  --moss:#520a82;
   --moss-line: rgba(120,150,125,0.18);
-  --cream:#f1ead6;
+  --cream:#520a82;
   --cream-dim: rgba(241,234,214,0.62);
-  --red:#c1372a;
-  --red-deep:#7e2115;
-  --gold:#c89b3c;
-  --white-dot:#f5efe0;
+  --red:#520a82;
+  --red-deep:#520a82;
+  --gold:#520a82;
+  --white-dot:#520a82;
 
   --display: 'Fraunces', serif;
   --body: 'Space Grotesk', sans-serif;
@@ -42,24 +42,6 @@ img{max-width:100%; display:block;}
   max-width:1180px;
   margin:0 auto;
   padding:0 32px;
-}
-
-/* ---------- spore field texture ---------- */
-.spore-field{
-  position:absolute; inset:0;
-  background-image:
-    radial-gradient(2px 2px at 8% 22%, var(--white-dot) 0, transparent 60%),
-    radial-gradient(3px 3px at 18% 68%, var(--red) 0, transparent 60%),
-    radial-gradient(2px 2px at 27% 12%, var(--gold) 0, transparent 60%),
-    radial-gradient(2px 2px at 39% 78%, var(--white-dot) 0, transparent 60%),
-    radial-gradient(3px 3px at 52% 30%, var(--white-dot) 0, transparent 60%),
-    radial-gradient(2px 2px at 63% 58%, var(--red) 0, transparent 60%),
-    radial-gradient(2px 2px at 71% 15%, var(--gold) 0, transparent 60%),
-    radial-gradient(3px 3px at 82% 66%, var(--white-dot) 0, transparent 60%),
-    radial-gradient(2px 2px at 91% 34%, var(--white-dot) 0, transparent 60%),
-    radial-gradient(2px 2px at 96% 82%, var(--red) 0, transparent 60%);
-  opacity:.55;
-  pointer-events:none;
 }
 
 /* ---------- nav ---------- */
