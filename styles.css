@@ -9,9 +9,9 @@
   --gold:#f9ecdb;
   --white-dot:#e0e0e0;
 
-  --display: 'Limelight', serif;
-  --body: 'Limelight', sans-serif;
-  --mono: 'Limelight', monospace;
+  --display: 'Limelight';
+  --body: 'Limelight';
+  --mono: 'Limelight';
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -44,7 +44,7 @@ img{max-width:100%; display:block;}
 
 /* ---------- nav ---------- */
 header{
-  position:fixed; top:0; left:0; right:0; z-index:100;
+  position:fixed; top:0; left:0; right:0; z-index:0;
   background:rgba(13,19,15,0.82);
   backdrop-filter: blur(10px);
   border-bottom:1px solid var(--moss-line);
