@@ -235,11 +235,3 @@ section{ position:relative; padding:100px 0; }
   .song-btn{ border-bottom:none; border-right:1px solid var(--moss-line); white-space:nowrap; }
   .lyric-panel{ padding:40px 26px; }
 }
-
-
-/* ---------- footer ---------- */
-footer{ padding:60px 0 40px; background:var(--void); border-top:1px solid var(--moss-line); }
-.foot-bottom{
-  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
-  font-family:var(--mono); font-size:.72rem; color:var(--cream-dim); letter-spacing:.04em;
-}
