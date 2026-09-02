@@ -13,19 +13,61 @@
     <style>
         .centered-text {
             font-family: 'Henny Penny', sans-serif;
-            font-size: 68px; /* Adjust size as needed */
+            font-size: 68px;
             color: #f9ecdb;
             text-align: center;
             vertical-align: middle;
         }
 
         
-.buttons {
+.button1 {
     width: 500px;
     height: auto;
 
     position: absolute;
     left: 1200px;
+    top: 300px;
+
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.buttons:hover {
+    transform: scale(1.01);
+}
+
+.buttons:active {
+    transform: scale(0.97);
+}
+
+        
+.button2 {
+    width: 500px;
+    height: auto;
+
+    position: absolute;
+    left: 700px;
+    top: 300px;
+
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.buttons:hover {
+    transform: scale(1.01);
+}
+
+.buttons:active {
+    transform: scale(0.97);
+}
+
+
+.button3 {
+    width: 500px;
+    height: auto;
+
+    position: absolute;
+    left: 300;
     top: 300px;
 
     cursor: pointer;
@@ -46,7 +88,15 @@
     <div class="centered-text">MUSCARIA</div>
 
 <a href="about.html">
-    <img class="buttons" src="mushroomabout.png" alt="About">
+    <img class="button1" src="mushroomabout.png" alt="About">
+</a>
+
+<a href="about.html">
+    <img class="button2" src="msgallery.png" alt="Gallery">
+</a>
+
+<a href="about.html">
+    <img class="button3" src="mushroomlyrics.png" alt="Lyrics">
 </a>
     
 </body>
