@@ -96,7 +96,7 @@ nav.wrap{
   display:flex; flex-direction:column; justify-content:center;
   padding-top:76px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(60,82,64,0.35), transparent 60%),
+    radial-gradient(ellipse at 0% 0%, rgba(60,82,64,0.35), transparent 100%),
     linear-gradient(180deg, var(--void), var(--panel-2));
   overflow:hidden;
 }
