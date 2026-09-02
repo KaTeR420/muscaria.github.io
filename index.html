@@ -17,23 +17,38 @@
             color: #f9ecdb";
             text-align: center;
             vertical-align: middle;
-            line-height: normal;
         }
 
         
-    .buttons {
+.buttons {
     width: 200px;
     height: auto;
 
-    display: block;
-    margin: 30px auto;
+    position: absolute;
+    left: 500px;
+    top: 300px;
+
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.buttons:hover {
+    transform: scale(1.1);
+}
+
+.buttons:active {
+    transform: scale(0.95);
 }
         
     </style>
 </head>
 <body>
     <div class="centered-text">MUSCARIA</div>
-    <img class="buttons" src="mushroomabout.png" alt="">
+
+<a href="about.html">
+    <img class="buttons" src="mushroomabout.png" alt="About">
+</a>
+    
 </body>
 
 
